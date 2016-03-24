@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jstl/core"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle - Usuário</title>
+</h:head>
+<h:body>
+
+	<div class="header">
+		<ui:insert name="header">
+			<ui:include src="/Filtro/paginas/log/log.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+	
+	<h:form id="Usuario">
+		<p:growl id="mensagens" showDetail="false" life="5000" autoUpdate="true" closable="true" />
+		
+		<!-- 
+		<p:signature style="width:400px;height:200px" widgetVar="sig" value="#{mbUsuario.ass}" required="true" label="Signature" guideline="true"/>
+			<div style="margin:20px 0">
+				<p:commandButton value="Submit" icon="ui-icon-check" update="output"/>
+				<p:commandButton value="Clear" icon="ui-icon-close" type="button" onclick="PF('sig').clear()"/>
+			</div>
+			<p:outputPanel id="output">
+			<h:outputText rendered="#{not empty mbUsuario.ass}" style="font-size:24px;display:block" value="Your Signature" />
+			<p:signature style="width:400px;height:200px;" value="#{mbUsuario.ass}" readonly="true"
+                     rendered="#{not empty mbUsuario.ass}" backgroundColor="#eaeaea" color="#03a9f4"/>
+		</p:outputPanel>
+		 -->
+		<p:dataTable
+			id="tabela"
+			var="item"
+			value="#{mbUsuario.lista}"
+			emptyMesage="Não há registros na tabela"
+			
+			scrollable="true"
+			scrollHeight="500"
+			
+			sortMode="multiple"
+			resizableColumns="true"
+			draggableColumns="true"
+			draggableRows="true"
+			reflow="true"
+			
+			selectionMode="single"
+			selection="#{mbUsuario.usuario}"
+			rowKey="#{item.id}"
+		>
+			<f:facet name="footer">
+				<p:commandButton tabindex="11" process="tabela" update=":Usuario:detalhes" icon="ui-icon-search" value="CRUD" oncomplete="PF('dialogo').show()" />
+			</f:facet>
+			<p:column style="width:16px">
+				<p:rowToggler />
+			</p:column>
+			<p:rowExpansion>
+				<p:panelGrid  columns="1" columnClasses="label,value">
+					<h:outputText value="#{item.id}" ></h:outputText>
+					<h:outputText value="#{item.horasDia}" ></h:outputText>
+					<h:outputText value="#{item.influencia}" ></h:outputText>
+					
+					<h:outputText value="#{item.apelido}" ></h:outputText>
+					<h:outputText value="#{item.cadastro}" ></h:outputText>
+					<h:outputText value="#{item.email}" ></h:outputText>
+					<h:outputText value="#{item.nivelDeAcesso}" ></h:outputText>
+					<h:outputText value="#{item.senha}" ></h:outputText>
+				</p:panelGrid>
+			</p:rowExpansion>
+			
+			<p:column headerText="Id" sortBy="#{item.id}" >
+				<h:outputText value="#{item.id}" ></h:outputText>
+			</p:column>
+		</p:dataTable>
+		
+		<p:dialog header="Informações de Usuário" widgetVar="dialogo" modal="true" showEffect="puff" hideEffect="puff" resizable="false">
+			<p:outputPanel id="detalhes" style="text-align:center;">
+				<p:panelGrid  columns="1" rendered="#{not empty mbUsuario.usuario}" columnClasses="label,value">
+					<p:inputMask id="id" tabindex="1" placeholder="Id" value="#{mbUsuario.usuario.id}" title="Id" required="true" requiredMessage="Id Obrigatório" mask="99" >
+						<p:tooltip showEvent="focus" hideEvent="blur"></p:tooltip>
+						<f:validator validatorId="validarNumero" />
+					</p:inputMask>
+					<p:calendar id="cadastro" tabindex="2" placeholder="Cadastro" value="#{mbUsuario.usuario.cadastro}" title="Cadastro" required="true" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:inputText id="apelido" tabindex="3" placeholder="Apelido" value="#{mbUsuario.usuario.apelido}" title="Apelido" >
+						<f:validator validatorId="validarNome" />
+					</p:inputText>
+					<p:inputText id="email" tabindex="4" placeholder="E-mail*" value="#{mbUsuario.usuario.email}" title="E-mail" required="true" requiredMessage="E-mail Obrigatório" >
+						<f:validator validatorId="validarEmail"></f:validator>
+					</p:inputText>
+					<p:password id="senha" match="senha2" tabindex="5" placeholder="Senha*" value="#{mbUsuario.usuario.senha}" required="true" feedback="true" />
+					<p:password id="senha2" tabindex="6" placeholder="Confirmar Senha*" value="#{mbUsuario.usuario.senha}" required="true" feedback="true" />
+					<p:selectOneMenu id="nivelDeAcesso" tabindex="7" value="#{mbUsuario.usuario.nivelDeAcesso}" >
+						<f:selectItem itemLabel="Operador" itemValue="operador" />
+						<f:selectItem itemLabel="Gerente" itemValue="gerente" />
+						<f:selectItem itemLabel="Gestor" itemValue="gestor" />
+						<f:selectItem itemLabel="Administrador" itemValue="administrador" />
+					</p:selectOneMenu>
+					<p:outputLabel value="* campos obrigatórios" />
+					
+					<p:commandButton tabindex="8" value="Inserir" id="inserir" actionListener="#{mbUsuario.inserir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="9" value="Alterar" id="alterar" actionListener="#{mbUsuario.alterar}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="10" value="Excluir" id="excluir" actionListener="#{mbUsuario.excluir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+				</p:panelGrid>
+				<p:panelGrid  columns="1" rendered="#{empty mbUsuario.usuario}" columnClasses="label,value">
+					<p:outputLabel value="Selecione uma linha" ></p:outputLabel>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+   </h:form>
+
+</h:body>
+</html>

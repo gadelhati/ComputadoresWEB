@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jstl/core"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle - Grupo</title>
+</h:head>
+<h:body>
+
+	<div class="header">
+		<ui:insert name="header">
+			<ui:include src="/Filtro/paginas/log/log.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+	
+	<h:form id="Grupo">
+		<p:growl id="mensagens" showDetail="false" life="5000" autoUpdate="true" closable="true" />
+		
+		<p:dataTable
+			id="tabela"
+			var="item"
+			value="#{mbGrupo.lista}"
+			emptyMesage="Não há registros na tabela"
+			
+			scrollable="true"
+			scrollHeight="500"
+			
+			sortMode="multiple"
+			resizableColumns="true"
+			draggableColumns="true"
+			draggableRows="true"
+			reflow="true"
+			
+			selectionMode="single"
+			selection="#{mbGrupo.grupo}"
+			rowKey="#{item.id}"
+		>
+			<f:facet name="footer">
+				<p:commandButton process="tabela" update=":Grupo:detalhes" icon="ui-icon-search" value="CRUD" oncomplete="PF('dialogo').show()" />
+			</f:facet>
+			<p:column style="width:16px">
+				<p:rowToggler />
+			</p:column>
+			<p:rowExpansion>
+				<p:panelGrid  columns="1" columnClasses="label,value">
+					<h:outputText value="#{item.id}" ></h:outputText>
+					<h:outputText value="#{item.nome}" ></h:outputText>
+					<h:outputText value="#{item.criacao}" ></h:outputText>
+					<h:outputText value="#{item.extincao}" ></h:outputText>
+					<h:outputText value="#{item.cor}" ></h:outputText>
+				</p:panelGrid>
+			</p:rowExpansion>
+			
+			<p:column headerText="Id" sortBy="#{item.id}" >
+				<h:outputText value="#{item.id}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Nome" sortBy="#{item.nome}" >
+				<h:outputText value="#{item.nome}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Criação" sortBy="#{item.criacao}" >
+				<h:outputText value="#{item.criacao}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Extinção" sortBy="#{item.extincao}" >
+				<h:outputText value="#{item.extincao}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Cor" sortBy="#{item.cor}" >
+				<h:outputText value="#{item.cor}" ></h:outputText>
+			</p:column>
+		</p:dataTable>
+		
+		<p:dialog header="Informações de Grupo" widgetVar="dialogo" modal="true" showEffect="puff" hideEffect="puff" resizable="false">
+			<p:outputPanel id="detalhes" style="text-align:center;">
+				<p:panelGrid  columns="1" rendered="#{not empty mbGrupo.grupo}" columnClasses="label,value">
+					<p:inputMask id="id" tabindex="1" placeholder="Id*" value="#{mbGrupo.grupo.id}" title="Id" required="true" requiredMessage="Id Obrigatório" mask="99" >
+						<p:tooltip showEvent="focus" hideEvent="blur"></p:tooltip>
+						<f:validator validatorId="validarNumero" />
+					</p:inputMask>
+					<p:inputText id="nome" tabindex="3" placeholder="Nome*" value="#{mbGrupo.grupo.nome}" title="Nome" required="true" requiredMessage="Nome Obrigatório" >
+						<f:validator validatorId="validarNome" />
+					</p:inputText>
+					<p:calendar id="criacao" tabindex="4" placeholder="Criação*" value="#{mbGrupo.grupo.criacao}" title="Criação" required="true" requiredMessage="Criação Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:calendar id="extincao" tabindex="5" placeholder="Extinção*" value="#{mbGrupo.grupo.extincao}" title="Extinção" required="true" requiredMessage="Extinção Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:colorPicker id="cor" tabindex="6" placeholder="Cor" value="#{mbGrupo.grupo.cor}" title="Cor" />
+					<p:outputLabel value="* campos obrigatórios" />
+					
+					<p:commandButton tabindex="3" value="Inserir" id="inserir" actionListener="#{mbGrupo.inserir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="4" value="Alterar" id="alterar" actionListener="#{mbGrupo.alterar}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="5" value="Excluir" id="excluir" actionListener="#{mbGrupo.excluir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+				</p:panelGrid>
+				<p:panelGrid  columns="1" rendered="#{empty mbGrupo.grupo}" columnClasses="label,value">
+					<p:outputLabel value="Selecione uma linha" ></p:outputLabel>
+				</p:panelGrid>
+			</p:outputPanel>
+			
+		</p:dialog>
+   </h:form>
+
+</h:body>
+</html>

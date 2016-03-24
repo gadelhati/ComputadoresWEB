@@ -1,0 +1,110 @@
+img{
+	padding: 0.5em;
+	width: 40px;
+	text-align: center;
+	vertical-align: middle;
+	display: block;
+}
+.ferramenta img{
+	float: left;
+}
+article {
+	height: 150px;
+	overflow: auto;
+}
+a {
+	decoration: nome;
+}
+/*INICIO OK*/
+* {
+	margin: 0 auto;
+	padding: 0;
+	/*margin e padding n�o contam*/
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+.group::before, .group::after {/*UM ELEMENTO PODE TER VÃ�RIAS CLASSES SEPARADAS POR ESPAÃ‡O*/
+	content:"";/*INSERÃ‡ÃƒO DE CONTEÃšDO PELO CSS*/
+	display: table;
+}
+.group::after {
+	clear: both;/*both, left, right; QUEBRA DE FLUXO DE ALINHAMENTO*/
+}
+.titulo th {
+	background-color: #195128;
+	background-image: linear-gradient(to top, #00510F, #17882C 50%);
+	font-size: 0.8em;
+	color: #DCFFE3;
+	padding: 5px;
+}
+.inserir td {
+	background-color: #ECEDF1;
+}
+label, input, checkbox, select {
+	vertical-align: middle;
+	width: 5em;
+}
+
+input:hover {
+	background-color: #ECEDF1;
+}
+input:focus {
+	background-color: #FDF499;
+}
+tr:hover {
+	background-color: #F7C514;
+	-webkit-transform:scale(1.03);
+	-moz-transform:scale(1.03);
+	-o-transform:scale(1.03);
+	transform:scale(1.03);
+	-webkit-transition: all 0.2s ease 0.1s;
+	-moz-transition: all 0.2s ease 0.1s;
+	-o-transition: all 0.2s ease 0.1s;
+	transition: all 0.2s ease 0.1s;
+}
+input[type="button"] {
+	font-size: 0.8em;
+}
+input[value="inserir"]:hover {
+	background-color: #F7C514;
+	color: #FFFFFF;
+}
+input[value="alterar"]:hover {
+	background-color: #F7C514;
+	color: #FFFFFF;
+}
+input[value="excluir"]:hover {
+	background-color: #A41E22;
+	color: #ECEDF1;
+}
+input[value="alterar"], input[value="excluir"] {
+	visibility: hidden;
+}
+tr:hover input[value="excluir"], tr:hover input[value="alterar"]{
+	visibility: visible;
+}
+@media screen and (min-width: 1024px) {
+	header, body {
+		width: 960px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	header, body {
+		width: 750px;
+	}
+	label[for='none'] {
+		display:none;
+	}
+}
+@media screen and (max-width: 768px) {
+	header, body {
+		width: 300px;
+	}
+	label[for="none"], select, option, input[type|="checkbox"], th[title|=""] {
+		display:none;
+	}
+}
+/*FINAL OK*/

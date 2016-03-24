@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jstl/core"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle - Recurso</title>
+</h:head>
+<h:body>
+
+	<div class="header">
+		<ui:insert name="header">
+			<ui:include src="/Filtro/paginas/log/log.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+	
+	<h:form id="Recurso">
+		<p:growl id="mensagens" showDetail="false" life="5000" autoUpdate="true" closable="true" />
+		
+		<p:dataTable
+			id="tabela"
+			var="item"
+			value="#{mbRecurso.lista}"
+			emptyMesage="Não há registros na tabela"
+			
+			scrollable="true"
+			scrollHeight="500"
+			
+			sortMode="multiple"
+			resizableColumns="true"
+			draggableColumns="true"
+			draggableRows="true"
+			reflow="true"
+			
+			selectionMode="single"
+			selection="#{mbRecurso.recurso}"
+			rowKey="#{item.id}"
+		>
+			<f:facet name="footer">
+				<p:commandButton process="tabela" update=":Recurso:detalhes" icon="ui-icon-search" value="CRUD" oncomplete="PF('dialogo').show()" />
+			</f:facet>
+			<p:column style="width:16px">
+				<p:rowToggler />
+			</p:column>
+			<p:rowExpansion>
+				<p:panelGrid  columns="1" columnClasses="label,value">
+					<h:outputText value="#{item.id}" ></h:outputText>
+					<h:outputText value="#{item.ferramenta.id}" ></h:outputText>
+					<h:outputText value="#{item.contratacao}" ></h:outputText>
+					<h:outputText value="#{item.aposentadoria}" ></h:outputText>
+					<h:outputText value="#{item.depreciacao}" ></h:outputText>
+					<h:outputText value="#{item.interesse}" ></h:outputText>
+					<h:outputText value="#{item.qtdMin}" ></h:outputText>
+					<h:outputText value="#{item.qtdMax}" ></h:outputText>
+				</p:panelGrid>
+			</p:rowExpansion>
+			
+			<p:column headerText="Id" sortBy="#{item.id}" >
+				<h:outputText value="#{item.id}" ></h:outputText>
+			</p:column>
+			<!--
+			<p:column headerText="Ferramenta" sortBy="#{item.ferramenta.id}" >
+				<h:outputText value="#{item.ferramenta.id}" ></h:outputText>
+			</p:column> 
+			<p:column headerText="Data de Contratação" sortBy="#{item.contratacao}" >
+				<h:outputText value="#{item.contratacao}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Data da Aposentadoria" sortBy="#{item.aposentadoria}" >
+				<h:outputText value="#{item.aposentadoria}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Depreciação" sortBy="#{item.depreciacao}" >
+				<h:outputText value="#{item.depreciacao}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Interesse" sortBy="#{item.interesse}" >
+				<h:outputText value="#{item.interesse}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Quantidade Mínima" sortBy="#{item.qtdMin}" >
+				<h:outputText value="#{item.qtdMin}" ></h:outputText>
+			</p:column>
+			<p:column headerText="Quantidade Máxima" sortBy="#{item.qtdMax}" >
+				<h:outputText value="#{item.qtdMax}" ></h:outputText>
+			</p:column>
+			 -->
+		</p:dataTable>
+		
+		<p:dialog header="Informações de Recurso" widgetVar="dialogo" modal="true" showEffect="puff" hideEffect="puff" resizable="false">
+			<p:outputPanel id="detalhes" style="text-align:center;">
+				<p:panelGrid  columns="1" rendered="#{not empty mbRecurso.recurso}" columnClasses="label,value">
+					<p:inputMask id="id" tabindex="1" placeholder="Id*" value="#{mbRecurso.recurso.id}" title="Id" required="true" requiredMessage="Id Obrigatório" mask="99" >
+						<p:tooltip showEvent="focus" hideEvent="blur"></p:tooltip>
+						<f:validator validatorId="validarNumero" />
+					</p:inputMask>
+					<p:selectOneMenu id="ferramenta" tabindex="2" value="#{mbRecurso.recurso.ferramenta}" >
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{mbFerramenta.lista}" var="objeto" itemLabel="#{objeto.id}" itemValue="#{objeto}" />
+					</p:selectOneMenu>
+					<p:calendar id="contratacao" tabindex="3" placeholder="Contratação" value="#{mbRecurso.recurso.contratacao}" title="Contratação" required="true" requiredMessage="Data Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:calendar id="aposentadoria" tabindex="4" placeholder="Aposentadoria" value="#{mbRecurso.recurso.aposentadoria}" title="Aposentadoria" required="true" requiredMessage="Data Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:calendar id="depreciacao" tabindex="5" placeholder="Depreciação" value="#{mbRecurso.recurso.depreciacao}" title="Depreciação" required="true" requiredMessage="Data Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<h:outputText id="valor" value="Interesse #{mbRecurso.recurso.interesse}" />
+					<h:inputHidden id="interesse" value="#{mbRecurso.recurso.interesse}" />
+					<p:slider for="interesse" tabindex="6" display="valor" displayTemplate="Interesse {value}" />
+					<p:spinner id="qtdMin" tabindex="7" value="#{mbRecurso.recurso.qtdMin}" min="0" max="9" title="Quantidade Mínima" required="true" requiredMessage="Quantidade Mínima de Horas por dia, Obrigatória" >
+						<f:validator validatorId="validarUmNumero" />
+					</p:spinner>
+					<p:spinner id="qtdMax" tabindex="8" value="#{mbRecurso.recurso.qtdMax}" min="0" max="9" title="Quantidade Máxima" required="true" requiredMessage="Quantidade Máxima de Horas por dia, Obrigatória" >
+						<f:validator validatorId="validarUmNumero" />
+					</p:spinner>
+					<p:outputLabel value="* campos obrigatórios" />
+					
+					<p:commandButton tabindex="9" value="Inserir" id="inserir" actionListener="#{mbRecurso.inserir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="10" value="Alterar" id="alterar" actionListener="#{mbRecurso.alterar}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+					<p:commandButton tabindex="11" value="Excluir" id="excluir" actionListener="#{mbRecurso.excluir}" icon="ui-icon-disk" update="tabela" onclick="PF('dialogo').hide()" />
+				</p:panelGrid>
+				<p:panelGrid  columns="1" rendered="#{empty mbRecurso.recurso}" columnClasses="label,value">
+					<p:outputLabel value="Selecione uma linha" ></p:outputLabel>
+				</p:panelGrid>
+			</p:outputPanel>
+			
+		</p:dialog>
+   </h:form>
+
+</h:body>
+</html>

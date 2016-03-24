@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jstl/core"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle - Log</title>
+</h:head>
+<h:body>
+
+	<h:form id="Log">
+		
+		<p:toolbar id="ferramentasLog" >
+			<f:facet name="left">
+				<c:if test='${usuario == null}'>
+					<p:inputMask id="id" tabindex="1" placeholder="Id" value="#{mbUsuario.usuario.id}" title="Id" required="true" mask="99" >
+						<p:tooltip showEvent="focus" hideEvent="blur"></p:tooltip>
+						<f:validator validatorId="validarNumero" />
+					</p:inputMask>
+					<p:password id="senha" match="senha" tabindex="2" placeholder="Senha*" value="#{mbUsuario.usuario.senha}" required="true" />
+					
+					<p:commandButton tabindex="3" value="Login" id="logIn" action="#{mbUsuario.logIn}" icon="ui-icon-disk" />
+					<p:commandButton tabindex="4" value="Nova Conta" id="novoLog" action="#{mbUsuario.logIn}" />
+					<p:commandButton tabindex="5" value="Esquecia a senha" id="esqueci" actionListener="#" disabled="true" />
+				</c:if>
+				<c:if test='${usuario != null}'>
+					<p:splitButton value="Escolha" icon="ui-icon-extlink">
+						<p:menuitem value="Pessoa" url="/Filtro/paginas/crud/pessoa.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Pessoa Física" url="/Filtro/paginas/crud/pessoaFisica.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Ferramenta" url="/Filtro/paginas/crud/ferramenta.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Recurso" url="/Filtro/paginas/crud/recurso.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Cargo" url="/Filtro/paginas/crud/cargo.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Usuário" url="/Filtro/paginas/crud/usuario.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Função" url="/Filtro/paginas/crud/funcao.xhtml" icon="ui-icon-extlink" />
+						<p:menuitem value="Grupo" url="/Filtro/paginas/crud/grupo.xhtml" icon="ui-icon-extlink" />
+						<p:separator />
+						<p:menuitem value="GTI - Gadelha" url="https://www.youtube.com/channel/UC99artktuIh7NgRAbfi4w-A" icon="ui-icon-extlink" />
+					</p:splitButton>
+				</c:if>
+			</f:facet>
+			<f:facet name="right">
+				<c:if test='${usuario != null}'>
+					<p:commandButton tabindex="5" value="logOff" id="logOff" action="#{mbUsuario.logOff}" icon="ui-icon-disk" />
+				</c:if>
+			</f:facet>
+		</p:toolbar>
+		
+    </h:form>
+    
+</h:body>
+</html>

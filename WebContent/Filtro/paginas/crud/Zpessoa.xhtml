@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jstl/core"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle - Pessoa</title>
+</h:head>
+<h:body>
+
+	<div class="header">
+		<ui:insert name="header">
+			<ui:include src="/Filtro/paginas/log/log.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+	
+	<h:form id="Pessoa">
+		
+		<p:tabView id="abas" >
+		
+			<p:tab title="Inserir" >
+				
+				<p:panel id="panel" header="Pessoa" footer="Detalhes da Pessoa" >
+				<h:panelGrid columns="1">
+				
+					<p:growl id="mensagens" showDetail="true" life="5000" autoUpdate="true" closable="true" />
+					<p:focus context="panel"/>
+					
+					<p:inputMask id="id" tabindex="1" placeholder="Id" value="#{mbPessoa.pessoa.id}" title="Id" required="true" requiredMessage="Id Obrigatório" mask="99" >
+						<p:tooltip showEvent="focus" hideEvent="blur"></p:tooltip>
+						<f:validator validatorId="validarNumero" />
+					</p:inputMask>
+					<p:calendar id="nascimento" tabindex="2" placeholder="Nascimento*" value="#{mbPessoa.pessoa.nascimento}" title="Nascimento" required="true" requiredMessage="Data Obrigatória" pattern="dd/MM/yyyy" ></p:calendar>
+					<p:inputText id="nome" tabindex="3" placeholder="Nome*" value="#{mbPessoa.pessoa.nome}" title="Nome" required="true" requiredMessage="Nome Obrigatório" >
+						<f:validator validatorId="validarNome" />
+					</p:inputText>
+					<p:outputLabel value="* campos obrigatórios" />
+					
+					<p:toolbar id="ferramentas" >
+						<f:facet name="left">
+							<p:commandButton tabindex="4" value="Limpar" id="limpar" type="reset" icon="ui-icon-refresh"/>
+							<p:commandButton tabindex="11" value="Inserir" id="inserir" actionListener="#{mbPessoa.inserir}" icon="ui-icon-disk" update="tabela" >
+								<p:confirm header="Confirmação" message="Tem certeza?" />
+							</p:commandButton>
+							<p:commandButton tabindex="5" value="Alterar" id="alterar" actionListener="#{mbPessoa.alterar}" icon="ui-icon-disk" update="tabela" >
+								<p:confirm header="Confirmação" message="Tem certeza?" />
+							</p:commandButton>
+							<p:commandButton tabindex="6" value="Excluir" id="excluir" actionListener="#{mbPessoa.excluir}" icon="ui-icon-disk" update="tabela" >
+								<p:confirm header="Confirmação" message="Tem certeza?" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="puff" hideEffect="puff">
+								<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</f:facet>
+						<f:facet name="right">
+							<p:commandButton tabindex="7" value="Imprimir" type="button" icon="ui-icon-print" >
+								<p:printer target="panel" />
+							</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+				<p:dataTable
+					id="tabela"
+					var="item"
+					value="#{mbPessoa.lista}"
+					paginator="true"
+					rows="5"
+					emptyMesage="Não há registros na tabela"
+					paginatorTempalte="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10"
+					
+					resizableColumns="true"
+					sortMode="multiple"
+					widgetVar="pessoaTabela"
+					draggableColumns="true"
+					draggableRows="true"
+					editable="true"
+					
+				>
+				<!-- {Exporters} -->
+				<!-- selectionMode="single"
+					selection="#{mbPessoa.lista}"
+					rowKey="#{pessoa.id}"
+					
+					scrollable="true"
+					scrollHeight="150" -->
+					
+					<f:facet name="header">
+						#{fn:length(mbPessoa.lista)} Pessoa(s)
+						<p:inputText id="globalFilter" onkeyup="PF('pessoaTabela').filter()" placeholder="Busca Geral"/>
+						<p:commandButton id="toggler" type="button" value="Colunas" icon="ui-icon-calculator" />
+						<p:columnToggler datasource="tabela" trigger="toggler" />
+					</f:facet>
+					<!-- 
+					<f:facet name="{Exporters}">
+						<h:commandLink>
+						<p:graphicImage name="/Filtro/imagens/usuario.png" />
+						<p:dataExporter type="pdf" target="tabela" fileName="lista"/>
+						</h:commandLink>
+					</f:facet>
+					 -->
+					<!-- 
+					<p:ajax event="rowEdit" listener="#{mbPessoa.onRowEdit}" update=":Pessoa:abas:mensagens" />
+					<p:ajax event="rowEditCancel" listener="#{mbPessoa.onRowCancel}" update=":Pessoa:abas:mensagens" />
+					 -->
+					<p:column headerText="Id" sortBy="#{item.id}" filterBy="#{item.id}" filterMatchMode="contains" >
+						<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.id}" ></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<h:inputText value="#{item.id}" ></h:inputText>
+						</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Nome" sortBy="#{item.nome}" filterBy="#{item.nome}" filterMatchMode="contains" >
+						<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{item.nome}" ></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<h:inputText value="#{item.nome}" ></h:inputText>
+						</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<f:facet name="footer">
+						<p:clock />
+					</f:facet>
+					
+					<p:column>
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+				
+				</h:panelGrid>
+				</p:panel>
+			</p:tab>
+			
+			<p:tab title="Tabela" >
+				
+			</p:tab>
+			
+        </p:tabView>
+		
+    </h:form>
+	
+</h:body>
+</html>

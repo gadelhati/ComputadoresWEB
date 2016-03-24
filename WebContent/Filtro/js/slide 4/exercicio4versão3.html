@@ -1,0 +1,31 @@
+<html>
+	<head>
+
+		<meta charset="UTF-8">
+	
+		<script type="text/javascript">
+		
+			var x=prompt("entre com uma palavra:");
+			var y=prompt("entre com um número:");
+			var contador=parseInt(y);
+			
+			document.write("<table>");
+			for(var i=0;i<contador;i++){
+				document.write("<tr>");
+				if(i%2==0){
+					document.write("<td>"+x+"</td>");
+				}else{
+					document.write("<td>"+x.split('').reverse().join('')+"</td>");
+				}
+				document.write("</tr>");
+			}
+			document.write("</table>");
+		
+		</script>
+
+	</head>
+	<body>
+
+
+	</body>
+</html>
