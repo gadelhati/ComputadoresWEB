@@ -1,0 +1,246 @@
+package br.eti.gadelha.web.academia.controlador.mb;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.junit.Test;
+
+import br.eti.gadelha.ejb.academia.interfaces.local.DAOLocalAluno;
+import br.eti.gadelha.ejb.academia.modelo.Aluno;
+
+/**
+ * @autor Marcelo Ribeiro Gadelha
+ * @since 07/08/2015
+ * @see www.gadelha.eti.br
+ **/
+
+@ManagedBean(name="testeMBAluno")
+@ViewScoped//@SessionScoped OU @RequestScoped
+public class TesteMBAluno implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@EJB private DAOLocalAluno daoAluno;
+	private Aluno aluno;
+	private List<Aluno> lista = new ArrayList<>();
+	
+	//@After
+	//@Berore
+	
+	@Test public TesteMBAluno() {
+		super();
+		this.aluno = new Aluno();
+		//int retorno = pilha.desempilhar();
+		//assertEquals(aluno, 0);
+		//assertTrue(aluno, 0);
+		//assertFalse(aluno, 0);
+	}
+	@PostConstruct
+	@Test public void construido() {
+		listar();
+	}
+	@Test public TesteMBAluno(DAOLocalAluno daoAluno, Aluno aluno, List<Aluno> lista) {
+		super();
+		this.daoAluno = daoAluno;
+		this.aluno = aluno;
+		this.lista = lista;
+		listar();
+	}
+	@Test public void teste() throws IOException {
+		/*
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Teste"));
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aluno", aluno);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lista", daoAluno.listar());
+		FacesContext.getCurrentInstance().getExternalContext().redirect("Filtro/paginas/sucesso4.xhtml");
+		*/
+		FacesContext.getCurrentInstance().getExternalContext().redirect("/WEB-INF/Protegido/sucesso4.xhtml");
+	}
+	@Test public void logIn() {
+		try {
+			if(consultar()){//!=null
+				//FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("atributo");
+				if(daoAluno.consultar(aluno).getId() == aluno.getId()) {
+					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aluno", aluno);
+					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", aluno.getId());
+					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lista", daoAluno.listar());
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Seção iniciada"));
+					FacesContext.getCurrentInstance().getExternalContext().redirect("Filtro/paginas/crud/aluno.xhtml");
+				}
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Seção não iniciada"));
+				//ou inserir();
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	@Test public void logOff() {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aluno", null);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lista", null);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("aluno");
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("lista");
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Seção encerrada"));
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	//CRUD
+	@Test public void alterar() {
+		if(consultar()){
+			daoAluno.alterar(aluno);
+			listar();
+			limpar();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Alterado"));
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Manutenção", "Alterado"));
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Manutenção", "Alterado"));
+		}
+	}
+	@Test public Boolean consultar() {
+		if(validar()) {
+			if(autenticar()) {
+				listar();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Encontrado"));
+				return true;
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não encontrado"));
+				return false;
+			}
+		}else {
+			return null;
+		}
+	}
+	@Test public void excluir() {
+		if(consultar()) {
+			daoAluno.excluir(aluno);
+			listar();
+			limpar();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Excluído"));
+		}
+	}
+	@Test public void inserir() {
+		if(!consultar()) {
+			daoAluno.inserir(aluno);
+			listar();
+			limpar();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Inserido"));
+		}
+	}
+	@Test public void listar() {
+		this.lista = daoAluno.listar();
+	}
+	
+	@Test public void limpar() {
+		this.aluno = new Aluno();
+	}
+	@Test public Boolean validar() {
+		try {
+			//(String.valueOf(aluno.getId()).matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))? true:false
+			//"[a-z]{2,20}@[a-z]{2,20}.com(.|)[a-z]{0,2}"
+			//"[a-zA-Z0-9]{2,20}"
+			if(aluno!=null){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Válido"));
+				return true;
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não válido"));
+				return false;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	@Test public Boolean autenticar() {
+		try {
+			if(daoAluno.consultar(aluno) != null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Autenticado"));
+				return true;
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Não autenticado"));
+				return false;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	@Test public Boolean autorizar() {
+		/*
+		 * servlet filter
+		 * phase listener
+		 * container managed security
+		 * jguard
+		 * spring security
+		 * apache shiro	PROPRIETÁRIO
+		 */
+		return null;
+	}
+	
+	@Test public void inativo() {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Inatividade.", "O que está fazendo?"));
+	}
+	@Test public void ativo() {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Bem vindo de volta", "Bem, foi um longo cafézinho!"));
+	}
+	/*
+	@Test public void onRowEdit(RowEditEvent event) {
+		if(event.getObject() == null) {
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Manutenção: ", "Atualização NÃO realizada!"));
+        }else{
+			dao.alterar((Classe)event.getObject());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Manutenção: ", "Atualização bem sucedida!"));
+        }
+		limpar();
+		listar();
+	}
+	@Test public void onRowCancel(RowEditEvent event) {
+	}
+	*/
+	
+	//GET & SET
+	@Test public Aluno getAluno() {
+		return aluno;
+	}
+	@Test public DAOLocalAluno getDaoAluno() {
+		/*
+		//TRATAMENTO DE BUG
+		try{
+			if(daoAluno == null){
+				//NOME QUE APARECE NA CONSOLE AO INICIAR O SERVIDOR "java:jboss/jdbc/sinais"
+				daoAluno = (DAOLocalAluno)new javax.naming.InitialContext().lookup("java:jboss/jdbc/academia");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}*/
+		return daoAluno;
+	}
+	@Test public List<Aluno> getLista() {
+		return lista;
+	}
+	@Test public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+	@Test public void setDaoAluno(DAOLocalAluno daoAluno) {
+		this.daoAluno = daoAluno;
+	}
+	@Test public void setLista(List<Aluno> lista) {
+		this.lista = lista;
+	}
+	@Override
+	@Test public String toString() {
+		return "MBAluno [daoAluno=" + daoAluno + ", aluno=" + aluno + ", lista=" + lista + "]";
+	}
+}

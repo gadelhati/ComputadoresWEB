@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>ControleWEB</display-name>
-  <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>/faces/*</url-pattern>
-    <url-pattern>*.xhtml</url-pattern>
-    <url-pattern>*.jsf</url-pattern>
-  </servlet-mapping>
+	<display-name>ControleWEB</display-name>
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	
+	<!-- ESTE BLOCO SÓ APARECERÁ CASO NÃO HAJA A CLASSE Singleton (Inicializador), TÃO POUCO O BLOCO init-param DENTRO DO BLOCO servlet -->
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	
+	<!-- ESTE BLOCO SÓ APARECERÁ CASO NÃO HAJA A CLASSE Singleton (Inicializador) -->
+	<!-- COM ESTE BLOCO, O PRÓPRIO REST ESCANEIA OS RECURSOS JAX-RS -->
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<context-param>
+		<!-- ESTES PARÊMETROS TAMBÉM PODEM APARECER NO BLOCO init-param DENTRO DO BLOCO servlet -->
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>
+	
+	<!-- O SERVLET RESPONDE NA PASTA /rest/*, PARA QUE O RestEasy INTERCEPTE CADA CHAMADA PARA O WEBSERVICE -->
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- REDIRECIONA OS REQUESTS PARA AS CLASSES JAX-RS -->
+	<servlet>
+		<servlet-name>Resteasy</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+		<!-- ESTES PARÊMETROS TAMBÉM PODEM APARECER NO BLOCO context-param
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>br.eti.gadelha.web.controle.service.inicializador.Inicializador</param-value>
+		</init-param>
+		 -->
+		
+		<!-- JERSEY...
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>br.com.curso.webservice.restful</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		 -->
+	</servlet>
+	
 </web-app>

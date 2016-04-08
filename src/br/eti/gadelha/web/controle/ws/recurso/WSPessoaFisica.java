@@ -1,4 +1,4 @@
-package br.eti.gadelha.web.controle.service;
+package br.eti.gadelha.web.controle.ws.recurso;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,25 +25,32 @@ import br.eti.gadelha.ejb.controle.modelo.oque.quem.PessoaFisica;
  * @see www.gadelha.eti.br
  * */
 
-@WebService
+@WebService//(name="DAOEMUsuario", targetNamespace="www.gadelha.eti.br") //EJB TAMBÉM DISPONÍVEL COMO WEB SERVICE
+//@Stateless//(name = "DAOEMUsuario", mappedName = "DAOEMUsuario")
 @Path("/WSPessoaFisica")
 public class WSPessoaFisica {
 	
 	private static final Logger log = Logger.getLogger(WSPessoaFisica.class.getName());
 	
+	//@PersistenceContext(unitName = "sinaisPU")
+	//EntityManager em;
 	@EJB DAOLocalPessoaFisica dao;
 	public WSPessoaFisica() {
 		// TODO Auto-generated constructor stub
 	}
 	//CRUD
+	//@WebMethod(operationName = "listar")
 	@PUT
 	@Path(value = "/alterar")
+	//@Produces({MediaType.TEXT_HTML, MediaType.TEXT_XML, MediaType.TEXT_PLAIN, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
+	//@Override
 	public void alterar(@Form PessoaFisica objeto) {
 		log.info("web: altetando"+objeto.toString());
 		dao.alterar(objeto);
 	}
 	@GET
 	@Path(value = "/consultar")
+	//http://localhost:8080/WSPessoaFisica/consultar
 	@Produces(MediaType.APPLICATION_JSON)
 	public PessoaFisica consultar(@Form PessoaFisica objeto) {
 		log.info("web: consultando"+objeto.toString());

@@ -1,4 +1,4 @@
-package br.eti.gadelha.web.controle.service.controlador;
+package br.eti.gadelha.web.controle.ws.servico;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +29,13 @@ import br.eti.gadelha.ejb.controle.modelo.oque.quem.PessoaFisica;
  * @see www.gadelha.eti.br
  * */
 
-@WebServlet(description = "Servlet", urlPatterns = { "/ServletCliente" })
-public class ServletCliente extends HttpServlet {
+@WebServlet(description = "Servlet", urlPatterns = { "/WSClientServlet" })
+public class WSClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	//@EJB DAOLocalPessoa dao;
-	private static final Logger log = Logger.getLogger(ServletCliente.class.getName());
+	private static final Logger log = Logger.getLogger(WSClienteServlet.class.getName());
 	
-    public ServletCliente() {
+    public WSClienteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,22 +47,22 @@ public class ServletCliente extends HttpServlet {
 		//Pessoa objeto = new Pessoa((long)request.getParameter("id"), (Date)request.getParameter("nascimento"), (String)request.getParameter("nome"));
 		Pessoa objeto = new PessoaFisica();
 		List<Pessoa> lista = new ArrayList<Pessoa>();
-			lista.add(objeto);
+		lista.add(objeto);
 		
 		HttpSession sessao=request.getSession(true);
 		
 		//CLIENTE RESTeasy
-				ResteasyClient cliente = new ResteasyClientBuilder().build();
-				ResteasyWebTarget alvo = null;
-				Response resposta = null;
+		ResteasyClient cliente = new ResteasyClientBuilder().build();
+		ResteasyWebTarget alvo = null;
+		Response resposta = null;
 		
 		switch((String)request.getParameter("escolha")){
 		case "alterar":
 			try {
-				alvo = cliente.target("http://localhost:8080/ProjetoWEB/rs/ServicoPessoa/alterar");
+				alvo = cliente.target("http://localhost:8080/ControleWEB/rest/WSPessoa/alterar");
 				resposta = alvo.request().put(Entity.entity(objeto, MediaType.APPLICATION_JSON));
-				resposta.close();
 				log.info("cliente: alterando"+objeto.toString());
+				resposta.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -71,10 +70,19 @@ public class ServletCliente extends HttpServlet {
 			break;
 		case "consultar":
 			try {
-				alvo = cliente.target("http://localhost:8080/ProjetoWEB/rs/ServicoPessoa/alterar");
-				resposta = alvo.request().put(Entity.entity(objeto, MediaType.APPLICATION_JSON));
-				resposta.close();
+				alvo = cliente.target("http://localhost:8080/ControleWEB/rest/WSPessoa/consultar");
+				resposta = alvo.request().get();
+				//String nome = resposta.readEntity(String.class);//SE FOR SÓ UMA STRING
+				//Pessoa pessoa = resposta.readEntity(Pessoa.class);//SE FOR UMA Pessoa
+				/*SE FOR UMA LISTA
+				Users users = response.readEntity(Users.class);
+				for(User user : users.getUsers()){
+					System.out.println(user.getId());
+					System.out.println(user.getLastName());
+				}
+				*/
 				log.info("cliente: alterando"+objeto.toString());
+				resposta.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -85,10 +93,10 @@ public class ServletCliente extends HttpServlet {
 			break;
 		case "excluir":
 			try {
-				alvo = cliente.target("http://localhost:8080/ProjetoWEB/rs/ServicoPessoa/excluir");
+				alvo = cliente.target("http://localhost:8080/ControleWEB/rest/WSPessoa/excluir");
 				resposta = alvo.request().delete();
-				resposta.close();
 				log.info("cliente: excluindo"+objeto.toString());
+				resposta.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -96,12 +104,13 @@ public class ServletCliente extends HttpServlet {
 			break;
 		case "inserir":
 			try {
-				alvo = cliente.target("http://localhost:8080/ProjetoWEB/rs/ServicoPessoa/inserir");
+				alvo = cliente.target("http://localhost:8080/ControleWEB/rest/WSPessoa/inserir");
 				resposta = alvo.request().post(Entity.entity(objeto, "application/vnd.com.demo.user-management.user+xml;charset=UTF-8;version=1"));
+				//OU resposta = alvo.request().post(Entity.entity(cliente, MediaType.APPLICATION_XML));
 				log.info("cliente: resposta obj"+resposta.readEntity(Pessoa.class));
 				log.info("cliente: resposta status"+resposta.getStatus());
-				resposta.close();
 				log.info("cliente: inserindo"+objeto.toString());
+				resposta.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -109,7 +118,7 @@ public class ServletCliente extends HttpServlet {
 			break;
 		case "listar":
 			try {
-				alvo = cliente.target("http://localhost:8080/ProjetoWEB/rs/ServicoPessoa/listar");
+				alvo = cliente.target("http://localhost:8080/ControleWEB/rest/WSPessoa/listar");
 				resposta = alvo.request().get();
 				/*
 				lista = resposta.readEntity(List<Pessoa>.class);
@@ -117,8 +126,8 @@ public class ServletCliente extends HttpServlet {
 					
 				}
 				*/
-				resposta.close();
 				log.info("cliente: listando"+objeto.toString());
+				resposta.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

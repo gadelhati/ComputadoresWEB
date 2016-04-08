@@ -1,4 +1,4 @@
-package br.eti.gadelha.web.controle.service;
+package br.eti.gadelha.web.controle.ws.recurso;
 
 import java.util.Date;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,19 +32,31 @@ import br.eti.gadelha.ejb.controle.modelo.oque.quem.Pessoa;
 
 @WebService
 @Path("/WSPessoa")
+//Consumes e Produces PODEM VIR AQUI
 public class WSPessoa {
 	
-	//http://localhost:8080/SinaisWEBRE/RecursoPessoa?parametro=ESTE
-	@GET  
-	public String digaOla(@QueryParam("parametro") String parametro) {  
+	//http://localhost:8080/rest/WSPessoa/RecursoPessoa?parametro=ESTE
+	//http://localhost:8080/WEBCONTEXT/CLASSLEVEL@PATH/METHODLEVEL@PATH
+	//@Path("/{idioma: [A-Z][A-Z]}")
+	@GET
+	//@Override
+	//@Wrapped(element = "mensagensOlaMundo")
+	public String digaOla(@QueryParam("parametro") @DefaultValue("Gadelha") String parametro) {  
 		return "Olá Mundo! <br /> O parâmetro de \"Query\"enviado foi: " + parametro;  
 	}/*  
 	//http://localhost:8080/SinaisWEBRE/RecursoPessoa/ESTE
 	@GET  
 	@Path("/{parametro}")
 	public String digaOlaPath(@PathParam("parametro") String parametro) {  
-		return "Olá Mundo! <br /> O parâmetro de \"URI\" enviado foi: " + parametro;  
-	}*/
+		return "Olá Mundo! <br /> O parâmetro de \"URI\" enviado foi: " + parametro;
+	}
+	@GET
+	@Path("/{message}")
+	public Response publishMessage(@PathParam("message") String msgStr){
+		String responseStr = "Received message: "+msgStr;
+		return Response.status(200).entity(responseStr).build();
+	}
+	*/
 
 	@EJB DAOLocalPessoa dao;
 	public WSPessoa() {
@@ -60,12 +73,17 @@ public class WSPessoa {
 		return objeto;
 	}
 	@GET
-	@Path(value = "/testar/{email}")
+	@Path(value = "/testar/{valor1}/{valor2}")//PathParam e Regular Expression{}
 	@Produces({MediaType.APPLICATION_JSON})
-	public Pessoa testar(@PathParam("id") Long id) {
-		//@FormParam, @PathParam, @QueryParam...
+	public Pessoa testar(@PathParam("valor1") Long valor1, @PathParam("valor2") Long valor2) {
+		//@PathParam,	/path/valor1/valor2
+		//@QueryParam,	/path?parametro1=valor1&parametro2=valor2
+		//@MatrixParam,	/path;parametro1=valor1;parametro2=valor2
+		//@HeaderParam
+		//@FormParam
+		//@CookieParam
 		Pessoa objeto = new Pessoa();
-		objeto.setId(id);
+		objeto.setId(valor1);
 		return dao.consultar(objeto);
 	}
 	

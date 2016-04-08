@@ -1,4 +1,4 @@
-package br.eti.gadelha.web.controle.service.inicializador;
+package br.eti.gadelha.web.controle.ws.inicializador;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import br.eti.gadelha.web.controle.service.WSPessoa;
+import br.eti.gadelha.web.controle.ws.recurso.WSPessoa;
 
 /**
  * @autor Marcelo Ribeiro Gadelha
@@ -25,6 +25,7 @@ public class Inicializador extends Application{
 	@Override
 	public Set<Class<?>> getClasses() {
 		return empty;
+		//return Collections.emptySet();
 	}
 	@Override
 	public Set<Object> getSingletons() {
