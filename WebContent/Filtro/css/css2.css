@@ -1,0 +1,39 @@
+* {
+	background-color: red;
+}
+* {
+	margin: 0 auto;
+	padding: 0;
+	/*margin e padding não contam*/
+	-webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+#tabela {
+	width: 100%;
+	height: 100%;
+}
+#tabela {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  width: 8em;
+  margin-top: -2.5em;
+}
+@media screen and (min-width: 1024px) {
+	#tabela {
+		width: 960px;
+	}
+}
+@media screen and (max-width: 1024px) {
+	#tabela {
+		width: 750px;
+	}
+}
+@media screen and (max-width: 768px) {
+	#tabela {
+		width: 300px;
+	}
+}

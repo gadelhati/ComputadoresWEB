@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type=text/css>
+		.classe {width:240px; height: 200px; margin 10px; float:left;}
+		.classe > .frente{
+			position: absolute;
+			transform: perspective (600px) rotateY(0deg);
+			background: #FC0; width: 240px; height:200px; border-radius: 7px;
+			backface-visibility: hidden;
+			transition: transform .5s linear 0s;
+		}
+		.classe > .verso{
+			position: absolute;
+			transform: perspective (600px) rotateY(180deg);
+			background: #80BFFF; width: 240px; height:200px; border-radius: 7px;
+			backface-visibility: hidden;
+			transition: transform .5s linear 0s;
+		}
+		.classe:hover > .frente{
+			transition: perspective (600px) rotateY(-180deg);
+		}
+		.classe:hover > .verso{
+			transition: perspective (600px) rotateY(0deg);
+		}
+	</style>
+</head>
+<body>
+	<div class="classe">
+		<div class="verso">Verso</div>
+		<div class="frente">Frente</div>
+	</div>
+	<div class="classe">
+		<div class="verso">Verso</div>
+		<div class="frente">Frente</div>
+	</div>
+	<div class="classe">
+		<div class="verso">Verso</div>
+		<div class="frente">Frente</div>
+	</div>
+</body>
+</html>

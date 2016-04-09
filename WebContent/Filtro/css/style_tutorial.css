@@ -1,0 +1,183 @@
+@media print {
+    *{	/*QUEBRA DE PÁGINA*/
+		page-break-before: always;/*auto|always|avoid|left|right|initial|inherit*/
+		page-break-after: always;/*auto|always|avoid|left|right|initial|inherit*/
+		page-break-inside: avoid;/*auto|avoid|initial|inherit*/
+	}
+}
+@media all {}
+@media only screen and (min-width: 100px)and(max-width: 300px)and(orientation:portrait) {/*[not|only] [portrait|landscape]*/
+	/*SELETOR {	PROPRIEDADE:VALOR;}*/
+	/*SELETORES: *,html,head,title,body,a,div,header,footer,nav,aside,section,article,h1,h2,h3,h4,h5,h6,p,ol,ul,li,table,th,caption,tr,td,img,#id,.classe,h1.classe,form,input,select,option,textarea*/
+	/*
+	E	elementos do tipo E	Seletor tipo	1
+	E[foo]	elementos com o atributo "foo"
+	E[foo="bar"]	E cujo valor do atributo "foo" é exatamente igual a "bar"
+	E[foo~="bar"]	E cujo valor do atributo "foo" é uma lista de valores separados por espaço, um dos quais é exatamente igual a "bar"
+	E[foo^="bar"]	E cujo valor do atributo "foo" começa exatamente com a string "bar"
+	E[foo$="bar"]	E cujo valor do atributo "foo" termina exatamente com a string"bar"
+	E[foo*="bar"]	E cujo valor do atributo "foo" contém a substring "bar"
+	E[foo|="en"]	E cujo atributo "foo" tem uma lista de valores começando com "en" e seguida por um hífen
+	E:root	E raiz do documento
+	E:nth-child(n)	E que é o enésimo filho do seu elemento pai
+	E:nth-last-child(n)	E que é o enésimo filho (contado de trás para frente) do seu elemento pai
+	E:nth-of-type(n)	E que é o enésimo irmão do seu tipo
+	E:nth-last-of-type(n)	E que é o enésimo irmão (contado de trás para frente) do seu tipo
+	E:first-child	E que é o primeiro filho de seu elemento pai
+	E:last-child	E que é o último filho de seu elemento pai
+	E:first-of-type	E que é o primeiro irmão de seu tipo
+	E:last-of-type	E que é o último irmão de seu tipo
+	E:only-child	E que é o único filho de seu elemento pai
+	E:only-of-type	E que é irmão único do seu tipo
+	E:empty	E que não tem elementos filhos (inclusive nós de texto)
+	E:link
+	E:visited
+	E:active
+	E:hover
+	E:focus
+	E:target	E que é o destino de um fragmento identificador de um URI
+	E:lang(pt-br)	E em um determinado idioma - "exemplo: pt-br"
+	E:enabled
+	E:disabled	E de uma interface de usuário que está habilitado (:enabled) ou desabilitado (:disabled)
+	E:checked	E de uma interface de usuário que está marcado (:checked) (por exemplo: radio-button ou checkbox)
+	E::first-line	primeira linha formatada de E
+	E::first-letter	primeira letra formatada de E
+	E::before	conteúdo gerado antes de E
+	E::after	conteúdo gerado depois de E
+	E.foo	E cujo valor da classe é "foo"
+	E#foo	E cujo valor do atributo ID é "foo"
+	E:not(seletor)	E que não casa com o seletor simples seletor	Pseudo-classe negação	3
+	E F		F descendente de E
+	E > F	F filho de E
+	E + F	F imediatamente precedido de E
+	E ~ F	F precedido de E
+	*/
+	/*color: red|#F00|#FF0000|rgba(50,50,50,0.2)*/	/*length[cm|%|px|em]*/
+	h1,p {
+		/*PROPRIEDADES*/
+		content: "";/*INSERÇAO DE CONTEÚDO PELO CSS*/
+		cursor: default;/*auto|crosshair|default|e-resize|grab|help|move|n-resize|ne-resize|nw-resize|pointer|progress|s-resize|se-resize|sw-resize|text|w-resize|wait|not-allowed|no-drop*/
+		color: green;/*color|initial|inherit;*/
+		position: static;/*static|absolute|fixed|relative|initial|inherit;*/
+		top: auto;/*auto|[length|%]|initial|inherit*/
+		right: auto;/*auto|[length|%]|initial|inherit*/
+		bottom: auto;/*auto|[length|%]|initial|inherit*/
+		left: auto;/*auto|[length|%]|initial|inherit*/
+		z-index: auto;/*auto|number|initial|inherit;*/
+		opacity: 0.5;/*number|initial|inherit;*/
+		visibility: visible;/*visible|hidden(OCUPA ESPAÇO)|collapse(NÃO OCUPA ESPAÇO)|initial|inherit*/
+		clear: both;/*NÃO PERMITE ELEMENTOS FLUTUANDO, QUEBRA DO FLUXO DO ALINHAMENTO: none|left|right|both|initial|inherit;*/
+		clip: rect(0px,60px,200px,0px);/*RECORTA*//*top right bottom left*//*auto|shape|initial|inherit*/
+		display: inline;/*inline|block|flex|inline-block|inline-flex|inline-table|list-item|run-in|table|table-caption|table-column-group|table-header-group|table-footer-group|table-row-group|table-cell|table-column|table-row|none|initial|inherit*/
+		float: left;/*none|left|right|initial|inherit;*/
+		height: auto;/*auto|[length|%]|initial|inherit;*/
+		min-height: auto;/*auto|[length|%]|initial|inherit;*/
+		max-height: auto;/*auto|[length|%]|initial|inherit;*/
+		width: auto;/*auto|[length|%]|initial|inherit;*/
+		min-width: auto;/*auto|[length|%]|initial|inherit;*/
+		max-width: auto;/*auto|[length|%]|initial|inherit;*/
+		/*top right bottom left|top right bottom|top right|all*/
+		/*margin-top margin-right margin-bottom margin-left*/
+		/*margin: [length|%]|auto|initial|inherit;*/
+		margin: 2em;
+		overflow: scroll;/*overflow-x,overflow-y*//*visible|hidden|scroll|auto|initial|inherit;*/
+		/*top right bottom left|top right bottom|top right|all*/
+		/*padding-top padding-right padding-bottom padding-left*/
+		/*padding: [length|%]|initial|inherit;*/
+		padding: 0px;
+		box-sizing: border-box;/*content-box|border-box|initial|inherit*/
+		vertical-align: baseline;/*baseline|[length|%]|sub|super|top|text-top|middle|bottom|text-bottom|initial|inherit;*/
+		/*top right bottom left|top right bottom|top right|all*/
+		/*border-top-property|border-right-property|border-bottom-property|border-left-property*/
+		/*border: border-width border-style border-color|initial|inherit;*/
+		border-width: 15px;/*medium|thin|thick|[length|%]|initial|inherit*/
+		border-style: solid;/*none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|initial|inherit*/
+		border-color: blue;/*red|#ff0000|rgb(255,0,0)|transparent|initial|inherit*/
+		border-collapse: separate;/*separate|collapse|initial|inherit;*/
+		border-spacing: 10px 5px;/*horizontal vertical*//*[length|%]|initial|inherit;*/
+		caption-side: bottom;/*LOCAL ONDE FICARÁ O caption*//*top|bottom|initial|inherit;*/
+		empty-cells: hide;/*CÉLULAS VAZIAS NÃO APARECEM*//*show|hide|initial|inherit;*/
+		table-layout: auto;/*LARGURA DA CÉLULA: AUTO-AJUSTAVEL*//*auto|fixed|initial|inherit;*/
+		/*top-left-radius|top-right-radius|bottom-right-radius|bottom-left-radius*/
+		/*border-radius: [length|%]|initial|inherit;*/
+		border-radius: 2em;
+		/*box-shadow: none|h-shadow v-shadow blur spread color |inset|initial|inherit;*/
+		box-shadow: 10px 10px 5px #888888;/*+cima-baixo +esq-dir densidade cor*/
+		/*0 0:BRILHO, inset: INTERNO*//*MAIS DE UMA SOMBRA: separado por vírgula*/
+		/*background: color image position/size repeat origin clip attachment initial|inherit;*/
+		background-color: red;/*red|#ff0000|rgb(255,0,0)|transparent|initial|inherit*/
+		background-image: url("paper.gif");/*none|url('URL'),url('URL')|initial|inherit*//*linear-gradent(to bottom left, #000 70%, #FFF 90%)*/
+		background-position: right top;/*left top|left center|left bottom|right top|right center|right bottom| center top|center center|center bottom|initial|inherit|% %|xpos ypos*/
+		background-repeat: no-repeat; /*no-repeat|repeat-x|repeat-y*|repeat|initial|inherit*//*horizontal, vertical*/
+		background-attachment:;/*scroll|fixed|local|initial|inherit*/
+		background-origin: content-box;/*para imagens*//*background-origin: padding-box|border-box|content-box|initial|inherit;*/
+		background-size: auto;/*para imagens*//*background-size: auto|[length|%]|cover|contain|initial|inherit;*/
+		background-clip: content-box;/*para cores*//*background-clip: border-box|padding-box|content-box|initial|inherit;*/
+		align-content: center;/*stretch|center|flex-start|flex-end|space-between|space-around|initial|inherit*/
+		align-items: center;/*stretch|center|flex-start|flex-end|baseline|initial|inherit;*/
+		align-self: center;/*auto|stretch|center|flex-start|flex-end|baseline|initial|inherit;*/
+		text-align: center;/*center|right|left|justify*/
+		-webkit-order: 1;/* Code for Safari 6.1 and newer */
+		order: 1;/*number|initial|inherit*/
+		-webkit-justify-content: space-around; /* Safari 6.1+ */
+		justify-content: space-around;/*flex-start|flex-end|center|space-between|space-around|initial|inherit*/
+		/*text-decoration: none|underline|overline|line-through|initial|inherit;*/
+		-moz-text-decoration-color: red; /* Code for Firefox */
+		text-decoration-color: red;
+		-moz-text-decoration-line: underline;
+		text-decoration-line: underline;/*text-decoration-line: none|underline|overline|line-through|initial|inherit;*/
+		-moz-text-decoration-style: wavy;
+		text-decoration-style: solid;/*solid|double|dotted|dashed|wavy|initial|inherit;*/
+		text-shadow: 2px 2px #ff0000;/*0 0 3px #FF0000, 0 0 5px #0000FF*//*h-shadow v-shadow blur-radius color|none|initial|inherit*//*-0.3em 0.3em 0.2em*/
+		/*text-underline-position: ?;*/
+		text-transform: uppercase;/*uppercase|lowercase|capitalize*/
+		text-indent: 50px;
+		/*FONTE*/
+		font-family: "Times New Roman", Times, serif;
+		font-style: normal;/*normal|italic|oclique*/
+		font-size: 40px;/* 40px/16=2.5em */
+		font-variant: small-caps;/*normal|small-caps|initial|inherit*/
+		/*columns: auto|column-width column-count|initial|inherit;*/
+		/*column-width column-count*/
+		column-span: 1;/*1|all|initial|inherit*/
+		-webkit-column-count: 3;/* Chrome, Safari, Opera */
+		-moz-column-count: 3;/* Firefox */
+		column-count: 3;/*number|auto|initial|inherit*/
+		-moz-column-fill: auto;/* Firefox */
+		column-fill: balance;/*balance|auto|initial|inherit*/
+		-webkit-column-gap: 40px;/* Chrome, Safari, Opera */
+		-moz-column-gap: 40px;/* Firefox */
+		column-gap: 40px;/*[length|%]|normal|initial|inherit*/
+		/*ESPAÇO ENTRE AS COLUNAS: largura, estilo e cor*/
+		-webkit-column-rule: 4px outset #ff00ff; /* Chrome, Safari, Opera */
+		-moz-column-rule: 4px outset #ff00ff; /* Firefox */
+		column-rule: 4px outset #ff00ff;
+		/*medium|thin|thick|[length|%]|initial|inherit*/
+		/*none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|initial|inherit*/
+		/*column-rule: column-rule-width column-rule-style column-rule-color|initial|inherit;*/
+		/*column-rule-width column-rule-style column-rule-color*/
+		-webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
+		animation: mymove 5s infinite;
+		/*animation: name duration timing-function delay iteration-count direction fill-mode play-state;*/
+		/*animation-name animation-duration animation-timing-function animation-delay animation-iteration-count animation-direction animation-fill-mode animation-play-state;*/
+		/*keyframename|none|initial|inherit*/
+		/*time|initial|inherit*/
+		/*linear|ease|ease-in|ease-out|cubic-bezier(n,n,n,n)|initial|inherit*/
+		/*time|initial|inherit*/
+		/*number|infinite|initial|inherit*/
+		/*normal|reverse|alternate|alternate-reverse|initial|inherit*/
+		/*none|forwards|backwards|both|initial|inherit*/
+		/*paused|running|initial|inherit*/
+	}
+}
+/*@keyframes animationname {keyframes-selector {css-styles;}}*/
+/* Chrome, Safari, Opera */ 
+@-webkit-keyframes mymove {
+	from {top: 0px;}
+	to {top: 200px;}
+}
+/* Standard syntax */ 
+@keyframes mymove {
+	from {top: 0px;}
+	to {top: 200px;}
+}

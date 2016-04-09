@@ -1,0 +1,13 @@
+max-height: 1000px;
+min-height: 1px;
+max-width: 1000px;
+min-width: 1px;
+
+display:none; //esconde um elemento e não ocupa espaço na página.
+visibility:hidden; //esconde um elemento mas ocupa o espaço do elemento na página.
+
+static
+relative
+	se mudar a posição(top, right, bottom, e left), outro item não ocupa o local original
+absolute
+	em relação ao pai que não seja static.

@@ -1,32 +1,47 @@
 @media only screen and (min-width: 900px){
 	*{
-		margin: 0 auto;
-		padding: 0;
 		box-sizing: border-box;
+		margin: 0 auto;
+		padding: 0;/*30px*/
+		/*font-family: Open Sans;*//**/
+		/*font-family: Open Sans Regular;*//**/
+		/*font-family: Open Sans Bold;*//**/
+		/*font-family: Arial;*//**/
+		/*font-family: Arial Regular;*//**/
+		/*font-family: Arial Bold;*//**/
+		/*CORE PRINCIPAL: #ECEDF1*/
+		/*CORES SECUNDÁRIAS: #21376C e #A41E22*/
 	}
 	#barra {
-		border-top: 1px solid #DFDFDF;
-		height: 28px;
-		background-color: #F1F1F1;
-		font-family: Open Sans Semibold;
-		font-size: 11px;
+		height: 28px;/**/
+		padding-top: 10px;/**/
+		padding-bottom: 6px;/**/
+		/*padding-left: 12px;*/
+		/*padding-right: 35px;*/
+		font-family: Open Sans Semibold;/**/
+		font-size: 11px;/**/
+		color: #606060;/**/
+		background-color: #F1F1F1;/**/
+		border-top: 1px solid #DFDFDF;/**/
 	}
 	#header {
-		background-color: #ECEDF1;
-		background-image: linear-gradient(to top, #ECEDF1, #F0F2F1);
+		background-color: #ECEDF1;/*MEU*/
+		background-image: linear-gradient(to top, #ECEDF1, #F0F2F1);/**/
 	}
 	#cabecalho {
-		width: 900px;
-		font-size: 12px;
-		padding: 15px 48px 30px 48px;
+		width: 900px;/**/
+		font-size: 12px;/**/
+		font-family: Open Sans Regular;/**/
+		padding-top: 15px;/**/
+		padding-bottom: 30px;/**/
 	}
 	#topo {
 		padding: 0px 0px 30px 0px;
 	}
 	.atalhos {
-		float: left;
-		font-size: 10px;
-		font-family: Arial;
+		float: left;/**/
+		font-size: 10px;/**/
+		font-family: Arial Regular;/**/
 	}
 	/*MEU*/
 	.atalhos, .idiomas, .acessibilidade {
@@ -40,8 +55,9 @@
 		float: left;
 	}
 	#nome {
-		font-size: 40px;
-		font-weight: bold;
+		font-family: Open Sans Extrabold;/**/
+		font-size: 40px;/**/
+		font-weight: bold;/*MEU*/
 	}
 	.acessibilidade, .busca, .redes, .idiomas {
 		float: right;
@@ -57,6 +73,7 @@
 		color: #000;
 	}
 	.migalhas{
+		font-size: 10px;/**/
 		padding: 0px 4px 0px 4px;
 		float: left;
 	}
@@ -77,14 +94,13 @@
 	.servicos {
 		float: right;
 	}
-	#principal {
-		clear: both;
-	}
+
 	#aside {
 		font-family: Open Sans Regular;
 		font-size: 14px;
 		/*float: left;*/
-		width: 150px;
+		width: 150px;/**/
+		margin-left: 60px;/**/
 	}
 	.menu {
 		margin-top: 45px;
@@ -105,8 +121,13 @@
 		font-size: 14px;
 		color: #172938;
 	}
+	/*960=150+60+750*/
 	#section{
 		width: 750px;
+		/*750=490+30+230*/
+		/*750=230+30+490*/
+		/*750=230+30+230+30+230*/
+		/*750=100+30+100+30+100+30+100+30+100+30+100*/
 	}
 	#miolo {
 		
@@ -130,8 +151,9 @@
 	div {
 		font-family: Open Sans;
 		color: #2C66CE;
-		/*border-radius: 4px;*/
 		border-width: 1px;
+		/*border-radius: 4px;*/
+		/*border-style: solid;*/
 	}
 	p {
 		font-family: Arial Regular;
@@ -139,19 +161,36 @@
 		line-height: 21px;
 		color: #172938;
 	}
+	p a {
+		color: #2C67CD;
+	}
+	p a:hover {
+		color: #172938;
+	}
 	li {
 		list-style-type: none;
 	}
 	a {
-		color: #2c67cd;
 		text-decoration: none;
-	}
-	a:hover {
-		color: #172938;
 	}
 }
 /*
-@media only screen and (min-width: 1024px){}
-@media only screen and (min-width: 768px){}
-@media only screen and (max-width: 768px){}
+@media only screen and (min-width: 1024px){
+	#cabecalho, #principal, #rodape {
+		padding-right: 32px;
+		padding-left: 32px;
+	}
+}
+@media only screen and (min-width: 768px){
+	#cabecalho, #principal, #rodape {
+		margin-right: 14px;
+		margin-left: 14px;
+	}
+}
+@media only screen and (max-width: 768px){
+	#cabecalho, #principal, #rodape {
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+}
 */
